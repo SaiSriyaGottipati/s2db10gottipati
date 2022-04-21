@@ -48,17 +48,17 @@ exports.Vehicle_create_post = async function (req, res) {
 
 // Handle Vehicles delete form on DELETE. 
 exports.Vehicle_delete = async function (req, res) {
-   // res.send('NOT IMPLEMENTED: Vehicle delete DELETE ' + req.params.id);
-    console.log("delete "  + req.params.id) 
-    try { 
-        result = await Vehicle.findByIdAndDelete( req.params.id) 
-        console.log("Removed " + result) 
-        res.send(result) 
-    } catch (err) { 
-        res.status(500) 
-        res.send(`{"error": Error deleting ${err}}`); 
-    } 
-}; 
+    // res.send('NOT IMPLEMENTED: Vehicle delete DELETE ' + req.params.id);
+    console.log("delete " + req.params.id)
+    try {
+        result = await Vehicle.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
+};
 
 
 // Handle Vehicles update form on PUT. 
@@ -93,4 +93,33 @@ exports.Vehicle_view_all_Page = async function (req, res) {
         res.status(500);
         res.send(`{"error": document for id ${req.params.id} not found`);
     }
+};
+
+
+// Handle a show one view with id specified by query 
+exports.Vehicle_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await Vehicle.findById(req.query.id)
+        res.render('vehicledetail',
+            { title: 'Vehicle Detail', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+}; 
+
+ // Handle building the view for creating a vehicle. 
+// No body, no in path parameter, no query. 
+// Does not need to be async 
+exports.Vehicle_create_Page =  function(req, res) { 
+    console.log("create view") 
+    try{ 
+        res.render('vehiclecreate', { title: 'Vehicle Create'}); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
 }; 
