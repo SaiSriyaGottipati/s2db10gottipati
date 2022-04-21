@@ -1,0 +1,43 @@
+extends layout
+block content
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to update
+    else
+        - let vehicleid = toShow._id
+        - let Vehicle_type = toShow.Vehicle_type
+        - let vehiclecolor = toShow.color
+        - let vehiclecost = toShow.cost
+            div.row(class='mb-2')
+                div.mr-1 ID is
+                div #{vehicleid}
+        - let actionid = "/resource/Vehicles/" + vehicleid
+        form(id='vehicleForm' action= actionid method="PUT")
+            div.form-group
+                label.vehicleAttr(for='Vehicle_type') Vehicle_type 
+                input#Vehicle_type(type='text' name='Vehicle_type',value= Vehicle_type )
+            div.form-group
+                label.vehicleAttr(for='vehiclecolor') vehiclecolor
+                input#vehiclecolor(type='text' name='vehiclecolor', value= vehiclecolor)
+            div.form-group
+                label.vehicleAttr(for='vehiclecost') vehicle cost
+                input#vehiclecost(type='number' name='vehiclecost',value= vehiclecost)
+                input(type="submit")
+            script.
+                document.forms['vehicleForm'].addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    // TODO do something here to show user that form is being submitted
+                    fetch(event.target.action, {
+                        method: 'PUT',
+                        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                    }).then((resp) => {
+                        return resp.json(); // or resp.text() or whatever the server sends
+                    }).then((body) => {
+                        alert("Save succeded")
+                        // TODO handle body
+                    }).catch((error) => {
+                        // TODO handle error
+                        alert("Save failed " + error )
+                    });
+                });
