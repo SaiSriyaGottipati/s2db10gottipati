@@ -1,6 +1,13 @@
 var express = require('express');
 const vehicle_controllers = require('../controllers/Vehicle');
 var router = express.Router();
+const secured = (req, res, next) => { 
+    if (req.user){ 
+      return next(); 
+    } 
+    req.session.returnTo = req.originalUrl; 
+    res.redirect("/login"); 
+  } 
 
 /* GET home page. */
 router.get('/', vehicle_controllers.Vehicle_view_all_Page);
@@ -12,7 +19,7 @@ router.get('/detail', vehicle_controllers.Vehicle_view_one_Page);
 router.get('/create', vehicle_controllers.Vehicle_create_Page);
 
 /* GET create update page */ 
-router.get('/update', vehicle_controllers.Vehicle_update_Page); 
+router.get('/update',secured,vehicle_controllers.Vehicle_update_Page); 
 
 /* GET delete costume page */ 
 router.get('/delete', vehicle_controllers.Vehicle_delete_Page); 

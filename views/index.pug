@@ -1,15 +1,27 @@
-extends layout
+//- extends layout
 
-block content
-  h1= title
-  p lab 10 welcome to learning pug
-  button(type="button", class="btn btn-info" , onClick = "moreClaps()") Press Me
-  div(id = "target") Clap for me
-  script.
-      var clap_count = 0;
-      function moreClaps(){
-        clap_count = clap_count + 2;
-        document.getElementById("target").innerHTML = 'Clap '+ clap_count +' times';
-      }
-  - var Vehicles= ['vehicle_type',' color ','cost']
-  a(href='/vehicles') Click here to search for Vehicles
+//- block content
+//-   h1= title
+//-   p lab 10 welcome to learning pug
+//-   button(type="button", class="btn btn-info" , onClick = "moreClaps()") Press Me
+//-   div(id = "target") Clap for me
+//-   script.
+//-       var clap_count = 0;
+//-       function moreClaps(){
+//-         clap_count = clap_count + 2;
+//-         document.getElementById("target").innerHTML = 'Clap '+ clap_count +' times';
+//-       }
+//-   - var Vehicles= ['vehicle_type',' color ','cost']
+//-   a(href='/vehicles') Click here to search for Vehicles
+extends layout 
+ 
+block content 
+  if (!user) 
+    a(href="/login") Login 
+    br 
+    a(href="/register") Register 
+  if (user) 
+    p You are currently logged in as #{user.username} 
+    a(href="/Vehicles") Take me to Vehicles 
+    br 
+    a(href="/logout") Logout 
