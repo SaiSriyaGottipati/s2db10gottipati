@@ -3,12 +3,18 @@ extends layout
 block content
   h1= title
   - let result = results
+  - let des = `dispatch(\"/vehicles/create\")`
+  button.btn( class="btn-secondary m-1" onclick= des) Create
   div(class= "container-fluid")
     div(class = "col m-1")
       each item,index in result
         - let destination = `dispatch(\"/vehicles/update?id=${item._id}\")` 
+        - let destination1 = `dispatch(\"/vehicles/detail?id=${item._id}\")`
+        - let destination2 = `dispatch(\"/vehicles/delete?id=${item._id}\")`
         div(class="col-sm-2", class="m-1") Item #{item.Vehicle_type}(#{item.color}) is #{item.cost} 
-        button.btn( class="btn-primary ml-1", onclick= destination) Update 
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
+        button.btn( class="btn-success m-1", onclick= destination1) Details
+        button.btn( class="btn-danger m-1", onclick= destination2) Delete 
    
   script. 
     function dispatch(path){ 

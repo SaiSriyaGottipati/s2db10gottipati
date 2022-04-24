@@ -16,13 +16,13 @@ router.get('/', vehicle_controllers.Vehicle_view_all_Page);
 router.get('/detail', vehicle_controllers.Vehicle_view_one_Page);
 
 /* GET create costume page */
-router.get('/create', vehicle_controllers.Vehicle_create_Page);
+router.get('/create',secured, vehicle_controllers.Vehicle_create_Page);
 
 /* GET create update page */ 
-router.get('/update',secured,vehicle_controllers.Vehicle_update_Page); 
+router.get('/update',secured, vehicle_controllers.Vehicle_update_Page); 
 
 /* GET delete costume page */ 
-router.get('/delete', vehicle_controllers.Vehicle_delete_Page); 
+router.get('/delete',secured, vehicle_controllers.Vehicle_delete_Page); 
  
 
 module.exports = router;
